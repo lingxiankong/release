@@ -29,6 +29,10 @@ readonly PROD_BUCKET="k8s-release-test-prod"
 readonly TEST_BUCKET="k8s-staging-kubernetes"
 readonly CI_BUCKET="kubernetes-release-dev"
 
+readonly GCRIO_PATH_PROD="k8s.gcr.io"
+readonly GCRIO_PATH_PROD_PUSH="gcr.io/$PROD_PROJECT"
+readonly GCRIO_PATH_TEST="gcr.io/$TEST_PROJECT"
+
 readonly KUBE_CROSS_REGISTRY="us.gcr.io/k8s-artifacts-prod/build-image"
 readonly KUBE_CROSS_IMAGE="${KUBE_CROSS_REGISTRY}/kube-cross"
 readonly KUBE_CROSS_CONFIG_LOCATION="build/build-image/cross"
@@ -1296,11 +1300,6 @@ release::set_globals () {
   else
     BUCKET_TYPE="release"
   fi
-
-  GCRIO_PATH_PROD="k8s.gcr.io"
-  GCRIO_PATH_PROD_PUSH="gcr.io/google-containers"
-  # The "test" GCR path
-  GCRIO_PATH_TEST="gcr.io/$TEST_PROJECT"
 
   GCRIO_PATH="${FLAGS_gcrio_path:-$GCRIO_PATH_TEST}"
 
