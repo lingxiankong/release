@@ -34,12 +34,12 @@ import (
 
 const (
 	// gcbmgr/anago defaults
-	DefaultToolRepo   = "release"
-	DefaultToolBranch = git.Master
-	DefaultToolOrg    = git.DefaultGithubOrg
-	DefaultProject    = "kubernetes-release-test"
-	DefaultDiskSize   = "300"
-	BucketPrefix      = "kubernetes-release-"
+	DefaultToolRepo       = "release"
+	DefaultToolBranch     = git.Master
+	DefaultToolOrg        = git.DefaultGithubOrg
+	DefaultStagingProject = "k8s-staging-kubernetes"
+	DefaultDiskSize       = "300"
+	BucketPrefix          = "kubernetes-release-"
 
 	versionReleaseRE  = `v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)(-[a-zA-Z0-9]+)*\.*(0|[1-9][0-9]*)?`
 	versionBuildRE    = `([0-9]{1,})\+([0-9a-f]{5,40})`

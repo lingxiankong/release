@@ -18,13 +18,15 @@
 # CONSTANTS
 ###############################################################################
 
-readonly DEFAULT_PROJECT="kubernetes-release-test"
-readonly PROD_PROJECT="kubernetes-release"
+readonly DEFAULT_PROJECT="k8s-staging-kubernetes"
+# TODO(prototype): Need to reference test prod project here
+readonly PROD_PROJECT="k8s-staging-kubernetes"
 readonly TEST_PROJECT="${TEST_PROJECT:-${PROJECT_ID:-$DEFAULT_PROJECT}}"
 
-readonly DEFAULT_BUCKET="kubernetes-release-gcb"
-readonly PROD_BUCKET="kubernetes-release"
-readonly TEST_BUCKET="kubernetes-release-gcb"
+readonly DEFAULT_BUCKET="k8s-staging-kubernetes"
+# TODO(prototype): Need to reference test prod project here
+readonly PROD_BUCKET="k8s-staging-kubernetes"
+readonly TEST_BUCKET="k8s-staging-kubernetes"
 readonly CI_BUCKET="kubernetes-release-dev"
 
 readonly KUBE_CROSS_REGISTRY="us.gcr.io/k8s-artifacts-prod/build-image"
@@ -975,7 +977,7 @@ release::gcs::publish () {
     "$publish_file_dst" || return 1
 
   if ((FLAGS_nomock)) && ! ((FLAGS_private_bucket)); then
-    # New Kubernetes infra buckets, like k8s-staging-releng, have a
+    # New Kubernetes infra buckets, like k8s-staging-kubernetes, have a
     # bucket-only ACL policy set, which means attempting to set the ACL on an
     # object will fail. We should skip this ACL change in those instances, as
     # new buckets already default to being publicly readable.
@@ -983,7 +985,7 @@ release::gcs::publish () {
     # Ref:
     # - https://cloud.google.com/storage/docs/bucket-policy-only
     # - https://github.com/kubernetes/release/issues/904
-    if [[ "$bucket" != "k8s-staging-releng" ]]; then
+    if [[ "$bucket" != "k8s-staging-kubernetes" ]]; then
       logecho -n "Making uploaded version file public: "
       logrun -s $GSUTIL acl ch -R -g all:R $publish_file_dst || return 1
     fi

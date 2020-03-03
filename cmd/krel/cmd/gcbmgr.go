@@ -118,7 +118,7 @@ func init() {
 	gcbmgrCmd.PersistentFlags().StringVar(
 		&buildOpts.Project,
 		"project",
-		release.DefaultProject,
+		release.DefaultStagingProject,
 		"Branch to run the specified GCB run against",
 	)
 	gcbmgrCmd.PersistentFlags().BoolVar(
