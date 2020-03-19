@@ -26,25 +26,25 @@ GITHUB_TOKEN=${FLAGS_github_token:-$GITHUB_TOKEN}
 # This is a safety measure to trim extraneous leading/trailing whitespace from
 # the OAuth token provided. Otherwise, authentication to GitHub will fail here.
 GITHUB_TOKEN="$( echo "$GITHUB_TOKEN" | tr -d '[:space:]' )"
-[[ -n "$GITHUB_TOKEN" ]] && GITHUB_TOKEN_FLAG=("-u" "${GITHUB_TOKEN}:x-oauth-basic")
+[[ -n "$GITHUB_TOKEN" ]] && GITHUB_TOKEN_FLAG=("-u ${GITHUB_TOKEN}:x-oauth-basic")
 GHCURL="curl -s --fail --retry 10 ${GITHUB_TOKEN_FLAG[*]}"
 JCURL="curl -g -s --fail --retry 10"
 GITHUB_API='https://api.github.com'
 GITHUB_API_GRAPHQL="${GITHUB_API}/graphql"
 K8S_GITHUB_API_ROOT="${GITHUB_API}/repos"
-K8S_GITHUB_API="$K8S_GITHUB_API_ROOT/kubernetes/kubernetes"
+K8S_GITHUB_API="$K8S_GITHUB_API_ROOT/kubernetes/cloud-provider-openstack"
 K8S_GITHUB_RAW_ORG='https://raw.githubusercontent.com/kubernetes'
 
 K8S_GITHUB_SEARCHAPI_ROOT='https://api.github.com/search/issues?per_page=100'
-K8S_GITHUB_SEARCHAPI="$K8S_GITHUB_SEARCHAPI_ROOT&q=is:pr%20repo:kubernetes/kubernetes%20"
-K8S_GITHUB_URL='https://github.com/kubernetes/kubernetes'
+K8S_GITHUB_SEARCHAPI="$K8S_GITHUB_SEARCHAPI_ROOT&q=is:pr%20repo:kubernetes/cloud-provider-openstack%20"
+K8S_GITHUB_URL='https://github.com/kubernetes/cloud-provider-openstack'
 if ((FLAGS_gcb)); then
   K8S_GITHUB_AUTH_ROOT="https://git@github.com/"
 else
   # ssh
   K8S_GITHUB_AUTH_ROOT="git@github.com:"
 fi
-K8S_GITHUB_AUTH_URL="${K8S_GITHUB_AUTH_ROOT}kubernetes/kubernetes.git"
+K8S_GITHUB_AUTH_URL="${K8S_GITHUB_AUTH_ROOT}kubernetes/cloud-provider-openstack.git"
 
 # Regular expressions for bash regex matching
 # 0=entire branch name
@@ -114,7 +114,7 @@ gitlib::is_repo_admin () {
 # returns 1 if token is invalid
 gitlib::github_api_token () {
   logecho -n "Checking for a valid github API token: "
-  if [[ $($GHCURL $K8S_GITHUB_API -I) =~ Cache-Control:\ private ]]; then
+  if [[ $($GHCURL $K8S_GITHUB_API -I) =~ cache-control:\ private ]]; then
     logecho -r "$OK"
   else
     logecho -r "$FAILED"
